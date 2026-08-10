@@ -1,0 +1,23 @@
+# secrets
+.env
+
+# generated database (not source, don't version binary data)
+db/*.db
+db/*.db-journal
+
+# raw pulled data
+data/raw/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# streamlit secrets (later, when we build the dashboard)
+.streamlit/secrets.toml
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+.vscode/

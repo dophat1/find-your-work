@@ -5,13 +5,21 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-BASE_URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v6/jobs"  
+# HEADERS = {
+#     'User-Agent': 'Jobsuche/2.9.2 (de.arbeitsagentur.jobboerse; build:1077; iOS 15.1.0) Alamofire/5.4.4',
+#     'Host': 'rest.arbeitsagentur.de',
+#     'X-API-Key': 'jobboerse-jobsuche',
+#     'Connection': 'keep-alive',
+# }
+
+BASE_URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v6/jobs" 
 HEADERS = {
     "X-API-Key": "jobboerse-jobsuche",
     "Origin": "https://www.arbeitsagentur.de",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*",
 }
+
 
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 

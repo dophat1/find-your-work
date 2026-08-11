@@ -12,7 +12,7 @@ data/raw/
 __pycache__/
 *.pyc
 .venv/
-venv/
+find_your_work/
 
 # streamlit secrets (later, when we build the dashboard)
 .streamlit/secrets.toml

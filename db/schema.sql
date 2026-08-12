@@ -13,6 +13,7 @@ CREATE TABLE postings (
     location varchar(255),
     entfernung INTEGER,
     publish_date date,
+    start_date date, 
     contract_type varchar(255),
     raw_description_text text,
     extracted_skills varchar(255), 

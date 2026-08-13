@@ -30,12 +30,12 @@ QUERIES = [
     {"wo": "Augsburg", "umkreis": 30, "was": "Data", "angebotsart": 34},
     {"wo": "Augsburg", "umkreis": 30, "was": "ML", "angebotsart": 34},
     {"wo": "Augsburg", "umkreis": 30, "was": "Analytics", "angebotsart": 34},
-    {"wo": "Munich", "umkreis": 30, "was": "Data", "angebotsart": None},
-    {"wo": "Munich", "umkreis": 30, "was": "ML", "angebotsart": None},
-    {"wo": "Munich", "umkreis": 30, "was": "Analytics", "angebotsart": None},
-    {"wo": "Munich", "umkreis": 30, "was": "Data", "angebotsart": 34},
-    {"wo": "Munich", "umkreis": 30, "was": "ML", "angebotsart": 34},
-    {"wo": "Munich", "umkreis": 30, "was": "Analytics", "angebotsart": 34}
+    {"wo": "Munchen", "umkreis": 30, "was": "Data", "angebotsart": None},
+    {"wo": "Munchen", "umkreis": 30, "was": "ML", "angebotsart": None},
+    {"wo": "Munchen", "umkreis": 30, "was": "Analytics", "angebotsart": None},
+    {"wo": "Munchen", "umkreis": 30, "was": "Data", "angebotsart": 34},
+    {"wo": "Munchen", "umkreis": 30, "was": "ML", "angebotsart": 34},
+    {"wo": "Munchen", "umkreis": 30, "was": "Analytics", "angebotsart": 34}
 ]
 
 

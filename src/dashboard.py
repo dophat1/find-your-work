@@ -25,7 +25,16 @@ def bin_distance(conn):
     binning_distance_dict = {f'{edges[i]}-{edges[i+1]}': counts[i] for i in range(len(counts))}
     return binning_distance_dict
 
+def rank_top10_companies(conn):
+    company_offers_query = 'SELECT name, COUNT(*) FROM postings JOIN companies ON postings.company_id = companies.company_id\
+                             GROUP BY name ORDER BY COUNT(name) DESC LIMIT 10'
+    result = conn.execute(company_offers_query).fetchall()
+    company_dict = {row[0]:row[1] for row in result}
+    return company_dict
+
+
 conn = db_connect.get_connection()
 st.bar_chart(count_contract_type(conn))
 st.bar_chart(count_location(conn))
 st.bar_chart(bin_distance(conn))
+st.bar_chart(rank_top10_companies(conn))

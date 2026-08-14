@@ -21,3 +21,5 @@ find_your_work/
 .DS_Store
 Thumbs.db
 .vscode/
+
+tests/experiment.py

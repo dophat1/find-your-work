@@ -35,7 +35,7 @@ def posting_loader(conn, data):
 def run_load():
     conn = db_connect.get_connection()
     for file_path in Path("data/raw").glob("*.json"):
-        with open(file_path) as f:
+        with open(file_path, encoding='utf-8' ) as f:
             full_json = json.load(f)
             postings = full_json.get('ergebnisliste', [])
             for posting in postings:

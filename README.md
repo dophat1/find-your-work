@@ -1,0 +1,3 @@
+## Criteria for skills vocabulary
+1. Would a candidate plausibly list this exact phrase as a named skill on their own CV?
+2. Does this term name one coherent discipline (like "machine learning" — sub-techniques like linear regression are just methods within it), or does it span several genuinely different, separately-hireable disciplines lumped together (like "AI" — spans NLP, computer vision, prompting, etc.)?

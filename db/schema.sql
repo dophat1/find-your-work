@@ -21,3 +21,9 @@ CREATE TABLE postings (
     salary INTEGER, 
     UNIQUE(source, referenznummer)
 );
+
+CREATE TABLE postings_skills(
+    posting_id INTEGER REFERENCES postings(posting_id) NOT NULL,
+    skill_name varchar(255) NOT NULL,
+    UNIQUE(posting_id, skill_name)
+);

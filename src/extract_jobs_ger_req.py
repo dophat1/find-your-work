@@ -18,4 +18,12 @@ for text in texts:
             word_around_german = tokens[start:end]
             match.append(word_around_german)
 
-print(match)
+for match_list in match:
+    for word in match_list: 
+        if word not in freq_dict:
+            freq_dict.update({word:1})
+        else:
+            freq_dict[word] += 1
+
+print(sorted(freq_dict.items(), key=lambda item: item[1],reverse=True))
+

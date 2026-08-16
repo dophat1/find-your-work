@@ -1,4 +1,6 @@
 import re 
+import db_connect
+import sqlite3
 
 SKILLS_DICTIONARY = {
     'machine_learning':['machine learning', 'maschinelles lernen'],
@@ -54,6 +56,7 @@ SKILLS_DICTIONARY = {
     'css': ['css'],
     'mongodb': ['mongodb'],
     'redis': ['redis'],
+    'kubernetes':['kubernetes', 'k8s']
 }
 
 def extract_skills(text, vocabulary):
@@ -63,6 +66,25 @@ def extract_skills(text, vocabulary):
             founded = re.search(rf"\b{re.escape(variant)}\b", text, re.IGNORECASE)
             if founded:
                 skills.add(skill)
-            else:
-                pass
     return skills
+
+def update_skills_db():
+    conn = db_connect.get_connection()
+    get_job_descr_query = 'SELECT posting_id, raw_description_text FROM postings WHERE raw_description_text IS NOT NULL;'
+    job_details = conn.execute(get_job_descr_query).fetchall()
+    for job_detail in job_details:
+        skills = extract_skills(job_detail[1], SKILLS_DICTIONARY)
+        for skill in skills:
+            try:   
+                insert_query = 'INSERT INTO postings_skills (posting_id, skill_name) VALUES (?, ?)'
+                values = (job_detail[0], skill)
+                conn.execute(insert_query, values)
+            except sqlite3.IntegrityError:
+                pass
+    
+    conn.commit()
+    conn.close()
+
+if __name__ == "__main__":
+    update_skills_db()
+            

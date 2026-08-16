@@ -22,4 +22,4 @@ find_your_work/
 Thumbs.db
 .vscode/
 
-tests/experiment.py
+tests/

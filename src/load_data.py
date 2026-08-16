@@ -31,9 +31,7 @@ def posting_loader(conn, data):
         pass 
 
 # Orchestration 
-
-def run_load():
-    conn = db_connect.get_connection()
+def run_load(conn):
     for file_path in Path("data/raw").glob("*.json"):
         with open(file_path, encoding='utf-8' ) as f:
             full_json = json.load(f)
@@ -45,4 +43,5 @@ def run_load():
     conn.close()
 
 if __name__ == "__main__":
-    run_load()
+    conn = db_connect.get_connection()
+    run_load(conn)

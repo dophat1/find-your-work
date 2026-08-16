@@ -16,7 +16,6 @@ CREATE TABLE postings (
     start_date date, 
     contract_type varchar(255),
     raw_description_text text,
-    extracted_skills varchar(255), 
     german_level_requirement varchar(255), 
     salary INTEGER, 
     UNIQUE(source, referenznummer)

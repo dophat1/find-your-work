@@ -1,6 +1,17 @@
 import re
 import db_connect
 
+
+GERMAN_LEVEL_DICTIONARY = {
+    'good':['gute', 'guten', 'gut'],
+    'really_good':['sehr gut', 'sehr gute', 'sehr guten'],
+    'fluent':['fließende', 'fließend'],
+    'business_fluent':['verhandlungssichere', 'verhandlungssicheres', 'verhandlungssicher'],
+    'b2':['b2'],
+    'c1':['c1'],
+    'c2':['c2']
+}
+
 conn = db_connect.get_connection()
 query = 'SELECT raw_description_text FROM postings WHERE raw_description_text IS NOT NULL'
 result = conn.execute(query).fetchall()

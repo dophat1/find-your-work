@@ -1,5 +1,6 @@
 import re
 import db_connect
+import sqlite3
 
 
 GERMAN_LEVEL_DICTIONARY = {
@@ -42,7 +43,9 @@ def explore_data():
 
 
 def extract_ger_prof(text, vocabulary):
+    # Limitation of v1: 
     tokens = re.findall(r'\w+', text.lower(), re.IGNORECASE)
+    ger_req = None
     for ger_prof in vocabulary.keys():
         for variant in vocabulary[ger_prof]:
             for index, tokenized_text in enumerate(tokens):            
@@ -53,7 +56,7 @@ def extract_ger_prof(text, vocabulary):
                     words_around_ger_prof = tokens[start:end]
                     has_deutsch = any('deutsch' in word for word in words_around_ger_prof)
                     if has_deutsch:
-                    # Find all german proficiency level in the text
+                    # Scanning all german proficiency level in the text
                         founded = []
                         for word in words_around_ger_prof:
                             if word in ['b2', 'c1', 'c2']:
@@ -61,14 +64,33 @@ def extract_ger_prof(text, vocabulary):
                             else:
                                 founded.append(ger_prof)
                         
-                        # Scanning and extracting the german proficiency, rules: CEFR > adjective
+                        # Extracting the german proficiency, rules: CEFR > adjective
                         cefr_level = [level for level in founded if level in ['b2', 'c1', 'c2']]
                         if cefr_level:
-                            ger_prof = cefr_level[0]
+                            ger_req = cefr_level[0]
                         elif founded:
-                            ger_prof = founded[0]
+                            ger_req = founded[0]
                         else: 
-                            ger_prof = None
+                            ger_req = None
     
-    return ger_prof
+    return ger_req
+
+def update_ger_prof_req():
+    conn = db_connect.get_connection()
+    get_job_descr_query = 'SELECT posting_id, raw_description_text FROM postings WHERE raw_description_text IS NOT NULL;'
+    job_details = conn.execute(get_job_descr_query).fetchall()
+    for job_detail in job_details:
+        ger_prof_req = extract_ger_prof(job_detail[1], GERMAN_LEVEL_DICTIONARY)
+        try:
+            update_query = 'UPDATE postings SET german_level_requirement = ? WHERE posting_id = ?'
+            values = (ger_prof_req, job_detail[0])
+            conn.execute(update_query, values)
+        except sqlite3.IntegrityError:
+            pass
+    conn.commit()
+    conn.close()
+
+if __name__ =="__main__":
+    update_ger_prof_req()
+            
 

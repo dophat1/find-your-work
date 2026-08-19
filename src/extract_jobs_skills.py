@@ -63,7 +63,7 @@ def extract_skills(text, vocabulary):
     skills = set(())
     for skill in vocabulary.keys():
         for variant in vocabulary[skill]:
-            founded = re.search(rf"\b{re.escape(variant)}\b", text, re.IGNORECASE)
+            founded = re.search(rf"(?<!\w){re.escape(variant)}(?!\w)", text, re.IGNORECASE)
             if founded:
                 skills.add(skill)
     return skills

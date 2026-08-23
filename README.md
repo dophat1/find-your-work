@@ -23,13 +23,19 @@ Python, `requests`, SQLite, regex-based extraction, pandas/numpy, Streamlit.
 ## Running it
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/dophat1/find-your-work.git
+cd find-your-work
 
-python src/ingest_ba.py
-python src/load_data.py
-python src/fetch_jobs_details.py
-python src/extract_jobs_skills.py
-python src/extract_jobs_ger_req.py
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+Then run the pipeline:
+
+```bash
+python run_pipeline.py           # ingest -> load -> fetch details -> extract skills -> extract German level
 
 python src/match.py              # rank postings against a CV
 streamlit run src/dashboard.py   # explore the market

@@ -1,5 +1,7 @@
 # Find Your Work
 
+![Alt text](images.png)
+
 A small end-to-end pipeline that pulls German data/ML job postings from the Bundesagentur für Arbeit (BA) Jobsuche API, extracts structured requirements from the raw text, matches postings against a CV, and visualizes the results in a Streamlit dashboard.
 
 ## Pipeline

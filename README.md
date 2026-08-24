@@ -1,6 +1,11 @@
 # Find Your Work
 
+<<<<<<< HEAD
 ![Alt text](images.png)
+=======
+![alt text]([http://url/to/img.png](https://canva.link/5wpowekl1sm38kr))
+
+>>>>>>> 8831b2c264c1b88b5a122d4a9c5bc8a6c5040a0d
 
 A small end-to-end pipeline that pulls German data/ML job postings from the Bundesagentur für Arbeit (BA) Jobsuche API, extracts structured requirements from the raw text, matches postings against a CV, and visualizes the results in a Streamlit dashboard.
 

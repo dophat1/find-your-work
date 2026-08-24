@@ -20,11 +20,11 @@ def posting_loader(conn, data):
         query = 'INSERT INTO postings (company_id, referenznummer, \
                                         title, location, entfernung, publish_date, \
                                         start_date, contract_type, raw_description_text,\
-                                        extracted_skills, german_level_requirement, salary) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
+                                        german_level_requirement, salary) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
         
         values = (company_id, data['referenznummer'], data['stellenangebotsTitel'], data['stellenlokationen'][0]['adresse']['ort'], 
                   data['entfernung'], data['datumErsteVeroeffentlichung'], data['eintrittszeitraum']['von'], 
-                  data['stellenangebotsart'], None, None, None, None
+                  data['stellenangebotsart'], None, None, None
         )
         conn.execute(query, values)
     except sqlite3.IntegrityError:

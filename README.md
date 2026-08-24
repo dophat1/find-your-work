@@ -9,8 +9,14 @@ A small end-to-end pipeline that pulls German data/ML job postings from the Bund
 3. **`src/fetch_jobs_details.py`** — for postings still missing a full description, calls a second BA endpoint (`jobdetails`) to fetch the raw text. The reference number has to be base64-encoded to build the URL — another undocumented detail found by inspecting the mobile app's traffic, not from any docs.
 4. **`src/extract_jobs_skills.py`** — regex/dictionary keyword extraction of ~50 tech/data skills from the posting text into a `postings_skills` join table.
 5. **`src/extract_jobs_ger_req.py`** — extracts the required German-language level (CEFR level or descriptive adjective) by scanning a token window around the word "deutsch" and prioritizing CEFR levels (B2/C1/C2) over adjectives when both appear in the window. `explore_data()` is the exploratory pass used to find the most frequent words that actually co-occur with "deutsch" before the extraction rule was designed.
-6. **`src/match.py`** — extracts skills from a candidate's CV text and ranks postings by Jaccard similarity (intersection over union) against each posting's extracted skills. This is explicitly a **baseline** — see Limitations.
+6. **`src/match.py`** — extracts skills from a candidate's CV text and ranks postings by Jaccard similarity (intersection over union) against each posting's extracted skills. This is explicitly a **baseline** — see Roadmap.
 7. **`src/dashboard.py`** — Streamlit dashboard: contract-type breakdown, location breakdown, a distance-from-search-center histogram, and the top companies by posting count.
+
+`run_pipeline.py` runs steps 1-5 in order as a single command.
+
+## Example output
+
+A real run against Augsburg/Munich "Data", "ML", "Analytics" searches pulled: 475 postings, 155 companies, 1,256 extracted skill matches, 471 postings with a full description fetched, 269 with a German-level requirement extracted.
 
 ## Data model
 
@@ -41,8 +47,17 @@ python src/match.py              # rank postings against a CV
 streamlit run src/dashboard.py   # explore the market
 ```
 
-## Limitations / next steps
+## Limitations
 
 - Skill and German-level extraction are keyword/regex-based, not a trained model — they'll miss synonyms and phrasings the dictionary doesn't cover.
-- The CV-posting matcher uses Jaccard similarity as a baseline. An obvious upgrade: TF-IDF or embedding-based similarity instead of raw set overlap.
 - Depends on an undocumented, reverse-engineered API that could change without notice.
+
+## Roadmap
+
+**Baseline (done).** `match.py` ranks postings against a CV using Jaccard similarity on extracted keyword skills — exact-match only, no notion of "similar" skills ("Python" and "python" match, "Python" and "programming" don't).
+
+**Next: embedding-based semantic matching.** Replace the keyword-overlap baseline with a multilingual sentence-transformers model — embed the CV and each posting's description, then rank by cosine similarity instead of raw skill-set overlap. This should catch semantically related requirements the keyword dictionary misses.
+
+**Evaluation.** Swapping in an embedding model isn't the actual deliverable here — showing it's genuinely better is. Plan: build a small hand-labeled evaluation set (one real CV plus 2-3 deliberately different fake personas), manually judge which postings are actually relevant to each, and compare the Jaccard baseline against the embedding approach on precision@5. Without this comparison, adding an embedding model is data engineering with an ML library imported, not a data science result — the evaluation is what earns the label.
+
+**Optional:** a skill-vs-salary correlation analysis, reusing the skills and salary fields already extracted in steps 1-5 — no new data collection needed.

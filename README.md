@@ -45,9 +45,15 @@ Then run the pipeline:
 ```bash
 python run_pipeline.py           # ingest -> load -> fetch details -> extract skills -> extract German level
 
-python src/match.py              # rank postings against a CV
-streamlit run src/dashboard.py   # explore the market
+# Rank postings against a CV (plain-text or PDF) and print title/company/link
+python src/match.py --cv path/to/your_cv.txt --top 10
+python src/match.py --cv path/to/your_cv.txt --top 20 --csv matches.csv   # also dump the full ranked list
+
+streamlit run src/dashboard.py   # "Match my CV" tab (paste CV, get ranked links) + market overview charts
 ```
+
+Each posting also carries an `apply_url` pointing at its public BA Jobsuche listing page, so both
+`match.py` and the dashboard give you a link you can actually click through and apply from.
 
 ## Limitations
 

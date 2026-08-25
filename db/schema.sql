@@ -17,7 +17,8 @@ CREATE TABLE postings (
     contract_type varchar(255),
     raw_description_text text,
     german_level_requirement varchar(255), 
-    salary INTEGER, 
+    salary INTEGER,
+    apply_url varchar(500),
     UNIQUE(source, referenznummer)
 );
 
